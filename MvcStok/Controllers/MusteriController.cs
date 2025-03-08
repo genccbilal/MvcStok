@@ -1,4 +1,4 @@
-﻿using System;
+﻿        using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,6 +28,10 @@ namespace MvcStok.Controllers
         [HttpPost]
         public ActionResult YeniMusteri(TBLMUSTERILER m1)
 		{
+			if (!ModelState.IsValid)
+			{
+                return View("YeniMusteri");
+			}
             db.TBLMUSTERILER.Add(m1);
             db.SaveChanges();
             return RedirectToAction("index");
@@ -39,7 +43,22 @@ namespace MvcStok.Controllers
             db.TBLMUSTERILER.Remove(musteri);
             db.SaveChanges();
             return RedirectToAction("index");
+        }
 
+        public ActionResult MusteriGetir(int id)
+		{
+            var mst = db.TBLMUSTERILER.Find(id);
+            return View("MusteriGetir",mst);
+		}
+
+
+        public ActionResult Guncelle(TBLMUSTERILER p1)
+        {
+            var mst = db.TBLMUSTERILER.Find(p1.MUSTERIID);
+            mst.MUSTERIAD = p1.MUSTERIAD;
+            mst.MUSTERISOYAD = p1.MUSTERISOYAD;
+            db.SaveChanges();
+            return RedirectToAction("index");
 
         }
 

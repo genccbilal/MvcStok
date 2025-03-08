@@ -11,8 +11,9 @@ namespace MvcStok.Models.Entity
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class TBLKATEGORILER
+	using System.ComponentModel.DataAnnotations;
+
+	public partial class TBLKATEGORILER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TBLKATEGORILER()
@@ -21,6 +22,8 @@ namespace MvcStok.Models.Entity
         }
     
         public short KATEGORIID { get; set; }
+        [Required(ErrorMessage ="Kategori Adýný Boþ Býrakamazsýnýz...!")]
+        [StringLength(50,ErrorMessage = "En Fazla 50 Karakter Girebilirsiniz")]
         public string KATEGORIAD { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
