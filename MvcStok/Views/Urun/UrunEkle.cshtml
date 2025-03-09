@@ -8,15 +8,15 @@
 
 <form method="post" class="form-group">
     <label>Ürün Adı:</label>
-    <input type="text" class="form-control" name="URUNAD" />
+    <input type="text" class="form-control" name="URUNAD" required="" maxlength="50" />
     <label>Marka</label>
-    <input type="text" class="form-control" name="MARKA" />
+    <input type="text" class="form-control" name="MARKA" required="" maxlength="50" />
     <label>Urun Kategori</label>
     @Html.DropDownListFor(m => m.TBLKATEGORILER.KATEGORIID, (List<SelectListItem>)ViewBag.dgr, new { @class="form-control"})
     <label>Fiyat</label>
-    <input type="text" class="form-control" name="FIYAT" />
+    <input type="number" class="form-control" name="FIYAT" />
     <label>Stok</label>
-    <input type="text" class="form-control" name="STOK" />
+    <input type="number" class="form-control" name="STOK" />
 
     <div style="margin-top:20px">
         <button class="btn btn-info">Ekle</button>
