@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MvcDbStokModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MvcDbStokModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -36,6 +36,7 @@
           </Key>
           <Property Name="SATISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="URUN" Type="int" />
+          <Property Name="KATEGORİ" Type="smallint" />
           <Property Name="MUSTERI" Type="int" />
           <Property Name="ADET" Type="tinyint" />
           <Property Name="FIYAT" Type="decimal" Precision="18" Scale="2" />
@@ -51,6 +52,18 @@
           <Property Name="FIYAT" Type="decimal" Precision="18" Scale="2" />
           <Property Name="STOK" Type="tinyint" />
         </EntityType>
+        <Association Name="FK_TBLSATISLAR_TBLKATEGORILER">
+          <End Role="TBLKATEGORILER" Type="Self.TBLKATEGORILER" Multiplicity="0..1" />
+          <End Role="TBLSATISLAR" Type="Self.TBLSATISLAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORILER">
+              <PropertyRef Name="KATEGORIID" />
+            </Principal>
+            <Dependent Role="TBLSATISLAR">
+              <PropertyRef Name="KATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TBLSATISLAR_TBLMUSTERILER">
           <End Role="TBLMUSTERILER" Type="Self.TBLMUSTERILER" Multiplicity="0..1" />
           <End Role="TBLSATISLAR" Type="Self.TBLSATISLAR" Multiplicity="*" />
@@ -93,6 +106,10 @@
           <EntitySet Name="TBLMUSTERILER" EntityType="Self.TBLMUSTERILER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBLSATISLAR" EntityType="Self.TBLSATISLAR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBLURUNLER" EntityType="Self.TBLURUNLER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBLSATISLAR_TBLKATEGORILER" Association="Self.FK_TBLSATISLAR_TBLKATEGORILER">
+            <End Role="TBLKATEGORILER" EntitySet="TBLKATEGORILER" />
+            <End Role="TBLSATISLAR" EntitySet="TBLSATISLAR" />
+          </AssociationSet>
           <AssociationSet Name="FK_TBLSATISLAR_TBLMUSTERILER" Association="Self.FK_TBLSATISLAR_TBLMUSTERILER">
             <End Role="TBLMUSTERILER" EntitySet="TBLMUSTERILER" />
             <End Role="TBLSATISLAR" EntitySet="TBLSATISLAR" />
@@ -106,8 +123,7 @@
             <End Role="TBLURUNLER" EntitySet="TBLURUNLER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MvcDbStokModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -128,6 +144,7 @@
           <Property Name="KATEGORIID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KATEGORIAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TBLURUNLER" Relationship="Self.FK_TBLURUNLER_TBLKATEGORILER" FromRole="TBLKATEGORILER" ToRole="TBLURUNLER" />
+          <NavigationProperty Name="TBLSATISLAR" Relationship="MvcDbStokModel.FK_TBLSATISLAR_TBLKATEGORILER" FromRole="TBLKATEGORILER" ToRole="TBLSATISLAR" />
         </EntityType>
         <EntityType Name="TBLMUSTERILER">
           <Key>
@@ -149,6 +166,8 @@
           <Property Name="FIYAT" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="TBLMUSTERILER" Relationship="Self.FK_TBLSATISLAR_TBLMUSTERILER" FromRole="TBLSATISLAR" ToRole="TBLMUSTERILER" />
           <NavigationProperty Name="TBLURUNLER" Relationship="Self.FK_TBLSATISLAR_TBLURUNLER" FromRole="TBLSATISLAR" ToRole="TBLURUNLER" />
+          <Property Name="KATEGORİ" Type="Int16" />
+          <NavigationProperty Name="TBLKATEGORILER" Relationship="MvcDbStokModel.FK_TBLSATISLAR_TBLKATEGORILER" FromRole="TBLSATISLAR" ToRole="TBLKATEGORILER" />
         </EntityType>
         <EntityType Name="TBLURUNLER">
           <Key>
@@ -217,7 +236,23 @@
             <End Role="TBLURUNLER" EntitySet="TBLURUNLER" />
             <End Role="TBLSATISLAR" EntitySet="TBLSATISLAR" />
           </AssociationSet>
+          <AssociationSet Name="FK_TBLSATISLAR_TBLKATEGORILER" Association="MvcDbStokModel.FK_TBLSATISLAR_TBLKATEGORILER">
+            <End Role="TBLKATEGORILER" EntitySet="TBLKATEGORILER" />
+            <End Role="TBLSATISLAR" EntitySet="TBLSATISLAR" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_TBLSATISLAR_TBLKATEGORILER">
+          <End Type="MvcDbStokModel.TBLKATEGORILER" Role="TBLKATEGORILER" Multiplicity="0..1" />
+          <End Type="MvcDbStokModel.TBLSATISLAR" Role="TBLSATISLAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLKATEGORILER">
+              <PropertyRef Name="KATEGORIID" />
+            </Principal>
+            <Dependent Role="TBLSATISLAR">
+              <PropertyRef Name="KATEGORİ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -255,6 +290,7 @@
           <EntitySetMapping Name="TBLSATISLAR">
             <EntityTypeMapping TypeName="MvcDbStokModel.TBLSATISLAR">
               <MappingFragment StoreEntitySet="TBLSATISLAR">
+                <ScalarProperty Name="KATEGORİ" ColumnName="KATEGORİ" />
                 <ScalarProperty Name="SATISID" ColumnName="SATISID" />
                 <ScalarProperty Name="URUN" ColumnName="URUN" />
                 <ScalarProperty Name="MUSTERI" ColumnName="MUSTERI" />

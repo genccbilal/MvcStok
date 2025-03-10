@@ -22,8 +22,9 @@
         <tr>
             <th>@ktgr.KATEGORIID</th>
             <td>@ktgr.KATEGORIAD</td>
-            <td><a href="/Kategori/Sil/@ktgr.KATEGORIID" class="btn btn-danger">Sil</a></td>
+            <td>@Html.ActionLink("Sil ", "Sil", new { id = ktgr.KATEGORIID }, new { @class = "btn btn-danger", onclick = "return confirm ('Silmek İstediğine Eminmisin')" })</td>
             <td><a href="/Kategori/KategoriGetir/@ktgr.KATEGORIID" class="btn btn-success">Güncelle</a></td>
+           
         </tr>
         }
 

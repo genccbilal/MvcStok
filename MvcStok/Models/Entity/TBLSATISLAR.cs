@@ -9,18 +9,21 @@
 
 namespace MvcStok.Models.Entity
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class TBLSATISLAR
-    {
-        public int SATISID { get; set; }
-        public Nullable<int> URUN { get; set; }
-        public Nullable<int> MUSTERI { get; set; }
-        public Nullable<byte> ADET { get; set; }
-        public Nullable<decimal> FIYAT { get; set; }
-    
-        public virtual TBLMUSTERILER TBLMUSTERILER { get; set; }
-        public virtual TBLURUNLER TBLURUNLER { get; set; }
-    }
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+
+	public partial class TBLSATISLAR
+	{
+		public int SATISID { get; set; }
+		public Nullable<int> URUN { get; set; }
+		public Nullable<int> MUSTERI { get; set; }
+		public Nullable<byte> ADET { get; set; }
+		public Nullable<decimal> FIYAT { get; set; }
+		public Nullable<short> KATEGORİ { get; set; }
+
+		public virtual TBLMUSTERILER TBLMUSTERILER { get; set; }
+		public virtual TBLURUNLER TBLURUNLER { get; set; }
+		public virtual TBLKATEGORILER TBLKATEGORILER { get; set; }
+	}
 }

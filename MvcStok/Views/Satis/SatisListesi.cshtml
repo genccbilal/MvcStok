@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MvcStok.Models.Entity.TBLSATISLAR>
+
+@{
+    ViewBag.Title = "Satış Listesi";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Satış Listesi</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Satış Id</th>
+            <th>Ürün Adı</th>
+            <th>Kategori</th>
+            <th>Müşteri</th>
+            <th>Adet</th>
+            <th>Fiyat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var st in Model)
+            {
+                <tr>
+                    <td>@st.SATISID</td>
+                    <td>@(st.TBLURUNLER != null ? st.TBLURUNLER.URUNAD : "Bilinmiyor")</td>
+                    <td>@(st.TBLURUNLER != null && st.TBLURUNLER.TBLKATEGORILER != null ? st.TBLURUNLER.TBLKATEGORILER.KATEGORIAD : "Bilinmiyor")</td>
+                    <td>@(st.TBLMUSTERILER != null ? st.TBLMUSTERILER.MUSTERIAD + " " + st.TBLMUSTERILER.MUSTERISOYAD : "Bilinmiyor")</td>
+                    <td>@st.ADET</td>
+                    <td>@st.FIYAT</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">Henüz bir satış kaydı bulunmamaktadır.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Satis")" class="btn btn-primary">Geri Dön</a>
